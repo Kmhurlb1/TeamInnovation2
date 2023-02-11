@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <style>
+        /* Add some basic styling to the page */
+        body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+          background-color: #f5f5f5;
+        }
+      
+        /* Style the form elements */
+        form {
+          width: 400px;
+          margin: auto;
+          text-align: left;
+          padding: 40px;
+          background-color: white;
+          box-shadow: 0px 0px 10px #ccc;
+          border-radius: 10px;
+        }
+      
+        /* Style the labels and inputs */
+        label,
+        input[type="text"],
+        select {
+          display: block;
+          margin-bottom: 20px;
+          width: 100%;
+          padding: 10px;
+          font-size: 16px;
+          box-sizing: border-box;
+          border: none;
+          border-radius: 5px;
+          background-color: #f5f5f5;
+        }
+      
+        /* Style the submit button */
+        input[type="submit"] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          float: right;
+        }
+      
+        /* Add some styling to the headings */
+        h1 {
+          text-align: center;
+          margin-bottom: 40px;
+          font-size: 24px;
+        }
+      </style>
+  </head>
+  <body>
+    <h1>Add User</h1>
+    <form action="/add_user" method="post">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br><br>
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" name="fname" required>
+      <br><br>
+      <label for="lname">Last Name:</label>
+      <input type="text" id="lname" name="lname" required>
+      <br><br>
+      <label for="role">Role:</label>
+      <select id="role" name="role">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+      </select>
+      <br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>TeamInnovation</title>
     <style>
-        body {
+    body {
     font-family: Arial, sans-serif;
     background-color: #e5f9f5;
     height: 100%;
@@ -179,7 +179,7 @@
   </head>
   <body>
     <header>
-      <h1>TeamInnovation Admin Dashboard</h1>
+      <h1>TeamInnovation Survey Dashboard</h1>
     </header>
     <nav>
       <ul>
@@ -188,39 +188,7 @@
         <li><a href="/surveys.ejs">Surveys</a></li>
       </ul>
     </nav>
-    <main>
-      <section class="summary">
-        <h2>Hello <%= fname %>! Welcome to your dashboard.</h2>
-        <p>Here we will fill you in on any information you need to reach the top of the leaderboard.</p>
-      </section>
-      <section class="data">
-        <h2>Data</h2>
-        <table>
-          <tr>
-            <th>Data Type</th>
-            <th>Value</th>
-          </tr>
-          <tr>
-            <td>Surveys Completed</td>
-            <!-- Variable for surveys below -->
-            <td><%= score %></td>
-          </tr>
-          <tr>
-            <td>Point Counter</td>
-            <!-- Variable for points below -->
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>Days Left in Current Competition</td>
-            <!-- Variable for days below -->
-            <td>0</td>
-          </tr>
-        </table>
-      </section>
-    </main>
+    <br><br>
     <footer>
       <p>&copy; 2023 TeamInnovation Inc.</p>
     </footer>
-    <script type="text/javascript" src="script.js"></script>
-  </body>
-</html>

@@ -10,6 +10,7 @@ const session = require('express-session');
 const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
+const { format } = require('node:path/win32');
 
 var fileExtensions = {
      ".html":    "text/html",
@@ -83,16 +84,60 @@ app.post('/auth', (req, res) => {
         let fname = results[0].fname;
         let score = results[0].score;
 
-        // Check if the user is an admin
+        // Check if the user is an admin ------------
         if (role === 'admin') {
           // Redirect the admin to the admin dashboard
 
+          
           res.render('admin_dashboard.ejs', { email: req.session.email, 
           fname: fname, score: score });
+          
+          app.get('/add_user.html', function (req, res) {
+            // Render add_user.html template
+            res.sendFile(path.join(__dirname + '/add_user.html'));
+          });
+
+          //Admin can update user profile
+          // Admin can add a new user
+
+          app.post('/add_user', function(req, res) {
+          // Get the new user information from the form
+          const newUser = {
+            email: req.body.email,
+            password: req.body.password,
+            fname: req.body.fname,
+            lname: req.body.lname,
+            role: req.body.role
+          };
+
+            // Insert the new user into the database
+            connection.query('INSERT INTO accounts_demo SET ?', newUser, function(error, results, fields) {
+              if (error) throw error;
+                console.log('New user ' +fname + ' was added successfully');
+              });
+
+            res.redirect('/admin_dashboard');
+          });
+
+          //Removing A User / Deny Access
+          app.get('/remove_user.html', function (req, res) {
+            res.sendFile(path.join(__dirname + '/remove_user.html'));
+          });
+          
+          app.post('/remove_user', function(req, res) {
+            const email = req.body.email;
+            // Delete the user from the database using the email
+            connection.query('DELETE FROM accounts_demo WHERE email = ?', [email], function(error, results, fields) {
+              if (error) throw error;
+              console.log('User with email ' + email + ' was removed successfully');
+            });
+            res.redirect('/admin_dashboard');
+          });
 
 
 
         } else {
+          //If not an admin
           // Redirect the regular user to the regular user dashboard
 
 
