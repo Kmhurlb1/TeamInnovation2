@@ -241,6 +241,23 @@ app.get('/dashboard.html', function (req, res) {
 });
 
 
+//added code to render Home, Points, and Surveys tabs from dashboard. 
+app.get('/admin_dashboard.ejs', function (req, res) {
+    res.render('admin_dashboard.ejs', { fname: 'Bob', score: '10' });
+});
+
+app.get('/dashboard.ejs', function (req, res) {
+    res.render('dashboard.ejs', { fname: 'Bob' , score: '10'});
+});
+
+app.get('/points.ejs', function (req, res) {
+    res.render('points.ejs', { fname: 'Bob', score: '10' });
+});
+
+app.get('/surveys.ejs', function (req, res) {
+    res.render('survey.ejs', { fname: 'Bob', score: '10' });
+});
+
 // Start the server
 app.listen(8080, () => {
   console.log('Listening on port 8080. Its listening on http://127.0.0.1:8080 or http://localhost:8080');
