@@ -67,7 +67,7 @@ app.post('/auth', (req, res) => {
   // Look up the user in the database
   if (email && password) {
     // Execute SQL query that'll select the account from the database based on the specified Email and password
-    connection.query('SELECT * FROM accounts_demo WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
+    connection.query('SELECT * FROM accounts WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
       // If there is an issue with the query, output the error
       if (error) throw error;
       // If the account exists
@@ -78,14 +78,14 @@ app.post('/auth', (req, res) => {
         // Redirect to home page
 
         // Get the role of the user from the results 
-        let role = results[0].role;
+        let role = results[0].user_type;
 
         //data variables from datbase
-        let fname = results[0].fname;
+        let fname = results[0].first_name;
         let score = results[0].score;
 
         // Check if the user is an admin ------------
-        if (role === 'admin') {
+        if (role === 'A') {
           // Redirect the admin to the admin dashboard
 
           
@@ -111,7 +111,7 @@ app.post('/auth', (req, res) => {
           };
 
             // Insert the new user into the database
-            connection.query('INSERT INTO accounts_demo SET ?', newUser, function(error, results, fields) {
+            connection.query('INSERT INTO accounts SET ?', newUser, function(error, results, fields) {
               if (error) throw error;
                 console.log('New user ' +fname + ' was added successfully');
               });
@@ -127,7 +127,7 @@ app.post('/auth', (req, res) => {
           app.post('/remove_user', function(req, res) {
             const email = req.body.email;
             // Delete the user from the database using the email
-            connection.query('DELETE FROM accounts_demo WHERE email = ?', [email], function(error, results, fields) {
+            connection.query('DELETE FROM accounts WHERE email = ?', [email], function(error, results, fields) {
               if (error) throw error;
               console.log('User with email ' + email + ' was removed successfully');
             });
@@ -174,7 +174,7 @@ app.post('/reset_password', (req, res) => {
   let email = req.body.email;
 
   // Check if the email exists in the database
-  connection.query(`SELECT * FROM accounts_demo WHERE email = ?`, [email], (error, results) => {
+  connection.query(`SELECT * FROM accounts WHERE email = ?`, [email], (error, results) => {
     if (error) throw error;
 
     // If the email exists
@@ -191,7 +191,7 @@ app.post('/reset_password', (req, res) => {
         if (err) throw err;
 
         // Update the password in the database
-        connection.query(`UPDATE accounts_demo SET password = ? WHERE email = ?`, [newPassword, email], (error, results) => {
+        connection.query(`UPDATE accounts SET password = ? WHERE email = ?`, [newPassword, email], (error, results) => {
           if (error) throw error;
 
           // Send the new password to the user via email
