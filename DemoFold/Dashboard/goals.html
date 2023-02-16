@@ -1,23 +1,89 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>TeamInnovation</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1>TeamInnovation Survey Dashboard</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="/DemoFold/Dashboard/index.html">Home</a></li>
-            <li><a href="/DemoFold/Dashboard/points.html">Points</a></li>
-            <li><a href="/DemoFold/Dashboard/goals.html">Goals</a></li>
-            <li><a href="/DemoFold/Dashboard/surveys.html">Surveys</a></li>
-        </ul>
-    </nav>
-    <br><br>
-    <footer>
-      <p>&copy; 2023 TeamInnovation Inc.</p>
-    </footer>
+
+<head>
+  <meta charset="UTF-8">
+  <title>TeamInnovation</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div class="user-info">
+    <!-- insert variables for name and permission here -->
+    <span class="username">John Doe</span><br>
+    <span class="permission">Admin</span>
+  </div>
+  <header>
+    <h1>TeamInnovation Survey Dashboard</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/DemoFold/Dashboard/index.html">Home</a></li>
+      <li><a href="/DemoFold/Dashboard/points.html">Points</a></li>
+      <li><a href="/DemoFold/Dashboard/goals.html">Goals</a></li>
+      <li><a href="/DemoFold/Dashboard/surveys.html">Surveys</a></li>
+    </ul>
+  </nav>
+  <div class="container" style="width: 63%;">
+    <h1 style="font-size: 50px; text-align: center;">Personal Goals</h1>
+    <h1>My Goals</h1>
+    <form id="goal-form">
+      <label for="goal-input" style="font-size: 16pt;">Enter a new goal:</label>
+      <input type="text" id="goal-input">
+      <button type="submit">Add</button>
+    </form>
+    <ul id="goal-list">
+    </ul>
+    <script>
+      const goalForm = document.querySelector('#goal-form');
+      const goalList = document.querySelector('#goal-list');
+      let goals = [];
+      goalForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const goalInput = document.querySelector('#goal-input');
+        const goalText = goalInput.value.trim();
+        if (goalText.length === 0) {
+          return;
+        }
+        goals.push(goalText);
+        goalInput.value = '';
+        renderGoals();
+      });
+      function renderGoals() {
+        goalList.innerHTML = '';
+        goals.forEach((goal) => {
+          const goalListItem = document.createElement('li');
+          goalListItem.textContent = goal;
+          goalList.appendChild(goalListItem);
+        });
+      }
+    </script>
+    <ul id="personal-goals">
+      <!-- Personal goals will be dynamically added here -->
+    </ul>
+    <h1>Manager-Assigned Goals</h1>
+    <ul id="manager-goals">
+      <!-- Manager-assigned goals will be dynamically added here -->
+      <li>Placeholder goal 1</li>
+      <li>Placeholder goal 2</li>
+      <li>Placeholder goal 3</li>
+      <li>Placeholder goal 4</li>
+      <li>Placeholder goal 5</li>
+      <li>Placeholder goal 6</li>
+    </ul>
+    <h1>Company-Wide Goals</h1>
+    <ul id="company-goals">
+      <!-- Company-wide goals will be dynamically added here -->
+      <li>Placeholder goal 1</li>
+      <li>Placeholder goal 2</li>
+      <li>Placeholder goal 3</li>
+    </ul>
+  </div>
+  <script type="text/javascript" src="script.js"></script>
+  <br><br>
+  <footer>
+    <p>&copy; 2023 TeamInnovation Inc.</p>
+  </footer>
+</body>
+
+</html>
