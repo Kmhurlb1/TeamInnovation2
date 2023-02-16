@@ -96,8 +96,8 @@ app.post('/auth', (req, res) => {
           // Redirect the admin to the admin dashboard
 
           
-          res.render('admin_dashboard.ejs', { email: req.session.email, 
-          fname: fname, score: score });
+          res.render('admin_dash.ejs', { email: req.session.email, 
+          fname: req.session.fname, score: score });
           
           app.get('/add_user.html', function (req, res) {
             // Render add_user.html template
@@ -112,18 +112,20 @@ app.post('/auth', (req, res) => {
           const newUser = {
             email: req.body.email,
             password: req.body.password,
-            fname: req.body.fname,
-            lname: req.body.lname,
-            role: req.body.role
+            first_name: req.body.fname,
+            last_name: req.body.lname,
+            user_type: req.body.role,
+            user_dept: req.body.dept
           };
 
             // Insert the new user into the database
             connection.query('INSERT INTO accounts SET ?', newUser, function(error, results, fields) {
               if (error) throw error;
-                console.log('New user ' +fname + ' was added successfully');
+                console.log('New user ' + req.session.fname + ' was added successfully');
               });
 
-            res.redirect('/admin_dashboard');
+            res.render('admin_dash.ejs', { email: req.session.email, 
+              fname: req.session.fname, score: score });
           });
 
           //Removing A User / Deny Access
@@ -138,7 +140,8 @@ app.post('/auth', (req, res) => {
               if (error) throw error;
               console.log('User with email ' + email + ' was removed successfully');
             });
-            res.redirect('/admin_dashboard');
+            res.render('admin_dash.ejs', { email: req.session.email, 
+              fname: req.session.fname, score: score });
           });
 
 
