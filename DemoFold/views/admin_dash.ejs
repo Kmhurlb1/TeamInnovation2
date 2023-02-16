@@ -2,12 +2,9 @@
   <head>
     <title>Dashboard</title>
     <style>
-      /* Add a background color */
       body {
         background-color: #f2f2f2;
       }
-      
-      /* Center the content on the page */
       .container {
         display: flex;
         flex-direction: column;
@@ -15,26 +12,39 @@
         justify-content: center;
         height: 100vh;
       }
-      
-      /* Add some padding to the content */
       .content {
         padding: 20px;
         background-color: white;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       }
-      
-      /* Style the header */
       h1 {
         font-size: 36px;
         margin: 0 0 20px 0;
       }
-      
-      /* Style the "Test Score" text */
       p {
         font-size: 24px;
         margin: 0;
       }
+      a {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+      }
+
+      a:hover {
+        background-color: #0062cc;
+      }
+
+      a:active {
+        background-color: #005cbf;
+}
+
     </style>
   </head>
   <body>
@@ -44,8 +54,9 @@
         <br>
         <p>Test Score: <%= score %></p>
         <hr>
-        <a href="/add_user.html"><strong>Add a new user<strong></a>
-        <a href="/remove_user.html"><strong>Revoke Access<strong></a>
+        <a href="/add_user.html">Add a new user</a>
+        <a href="/remove_user.html">Revoke Access</a>
+        <a href="/adManage_survey.ejs">Manage Survey</a>
       </div>
     </div>
   </body>

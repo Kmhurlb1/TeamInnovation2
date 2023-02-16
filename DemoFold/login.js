@@ -167,7 +167,30 @@ app.post('/auth', (req, res) => {
   }
 });
 
+//LogOut Function
+app.get('/logout', function(req, res) {
+  // Destroy the session
+  req.session.destroy(function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
+
+
+app.post('/logout', (req, res) => {
+  // Destroy the user's session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+    }
+    // Redirect to the login page
+    res.redirect('/login.html');
+  });
+});
 
 function generatePassword() {
   // Generate a random password
