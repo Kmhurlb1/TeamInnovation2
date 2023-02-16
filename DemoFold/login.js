@@ -317,7 +317,26 @@ app.get('/points.ejs', function (req, res) {
 });
 
 app.get('/survey.ejs', function (req, res) {
-    res.render('survey.ejs', { fname: req.session.fname, score: '10' });
+  res.render('survey.ejs', {
+      req: req,
+      fname: req.session.fname,
+      score: '10',
+      q1Value: typeof req.query.question1 !== 'undefined' ? req.query.question1 : '',
+      q2Value: typeof req.query.question2 !== 'undefined' ? req.query.question2 : '',
+      q3Value: typeof req.query.question3 !== 'undefined' ? req.query.question3 : '',
+      q4Value: typeof req.query.question4 !== 'undefined' ? req.query.question4 : '',
+      q5Value: typeof req.query.question5 !== 'undefined' ? req.query.question5 : '',
+      q6Value: typeof req.query.q6 !== 'undefined' ? req.query.q6 : 5,
+      q7Value: typeof req.query.q7 !== 'undefined' ? req.query.q7 : 5,
+      q8Value: typeof req.query.q8 !== 'undefined' ? req.query.q8 : 5,
+      q9Value: typeof req.query.q9 !== 'undefined' ? req.query.q9 : 5,
+      q10Value: typeof req.query.q10 !== 'undefined' ? req.query.q10 : 5,
+      q11Value: typeof req.query.q11 !== 'undefined' ? req.query.q11 : '',
+      q12Value: typeof req.query.q12 !== 'undefined' ? req.query.q12 : '',
+      q13Value: typeof req.query.q13 !== 'undefined' ? req.query.q13 : '',
+      q14Value: typeof req.query.q14 !== 'undefined' ? req.query.q14 : '',
+      q15Value: typeof req.query.q15 !== 'undefined' ? req.query.q15 : '',
+  });
 });
 
 
