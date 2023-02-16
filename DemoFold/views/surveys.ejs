@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>TeamInnovation</title>
+    <style>
+
+    form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .form-group {
+    margin: 1rem 0;
+  }
+  label {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #303030;
+  }
+    input[type=text] {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  .form-group.hidden {
+    display: none;
+  }
+   .error-message {
+    color: red;
+    margin-top: 0.5rem;
+  }
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #e5f9f5;
+    height: 100%;
+    margin: 0;
+  }
+  
+  header {
+    background-color: #00b0a9;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 36px;
+    margin-top: 20px;
+  }
+  
+  header .header-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  header .header-actions a {
+    background-color: #fff;
+    color: #00b0a9;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-left: 20px;
+    text-decoration: none;
+  }
+  
+  nav {
+    background-color: #00b0a9;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  nav a {
+    color: #fff;
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  main {
+    display: flex;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+  
+  section.summary {
+    background-color: #fff;
+    flex-basis: 100%;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 10px #ccc;
+  }
+  
+  section.summary h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #00b0a9;
+  }
+  
+  section.data {
+    background-color: #fff;
+    flex-basis: 100%;
+    padding: 20px;
+    box-shadow: 0px 0px 10px #ccc;
+  }
+  
+  section.data h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #00b0a9;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #00b0a9;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #00b0a9;
+    color: #fff;
+  }
+  
+  footer {
+    background-color: #00b0a9;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .leaderboard-and-points {
+    height: 100%;
+    display: flex;
+  }
+  
+  .counter {
+    background-color: #fff;
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px #ccc;
+    margin-right: 40px;
+    order: -1;
+    
+  }
+  
+  .leaderboard {
+    background-color: #fff;
+    box-shadow: 0px 0px 10px #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  .leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .leaderboard th, .leaderboard td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .leaderboard th {
+    background-color: #00b0a9;
+    color: #fff;
+  }
+  
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>TeamInnovation Survey Dashboard</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/admin_dashboard.ejs">Home</a></li>
+        <li><a href="/points.ejs">Points</a></li>
+        <li><a href="/surveys.ejs">Surveys</a></li>
+      </ul>
+    </nav>
+     <main>
+  <h1>Survey</h1>
+
+  <form action="/surveys" method="post">
+
+
+    <!-- Question 1 -->
+    <div class="form-group">
+      <label for="q1">Question 1:</label>
+      <select id="q1" name="question1">
+         <option value="yes">Yes</option>
+         <option value="no">No</option>
+       </select>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="form-group">
+      <label for="q2">Question 2:</label>
+      <select id="q1" name="question2">
+         <option value="yes">Yes</option>
+         <option value="no">No</option>
+       </select>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="form-group">
+      <label for="q3">Question 3:</label>
+      <select id="q1" name="question3">
+         <option value="yes">Yes</option>
+         <option value="no">No</option>
+       </select>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="form-group">
+      <label for="q4">Question 4:</label>
+      <select id="q1" name="question4">
+         <option value="yes">Yes</option>
+         <option value="no">No</option>
+       </select>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="form-group">
+      <label for="q5">Question 5:</label>
+      <select id="q1" name="question5">
+         <option value="yes">Yes</option>
+         <option value="no">No</option>
+       </select>
+    </div>
+    <br><br>
+
+    <label for="q6">Question 6: How likely are you to recommend our product?</label>
+    <div class="slidecontainer">
+     <input type="range" min="1" max="10" value="<%= typeof req.body.q6 !== 'undefined' ? req.body.q6 : 5 %>" class="slider" id="q6" name="q6">
+     <span>Value: <span id="q6Value"><%= typeof req.body.q6 !== 'undefined' ? req.body.q6 : 5 %></span></span>
+    </div>
+
+    <label for="q7">Question 7: How satisfied are you with our product?</label>
+    <div class="slidecontainer">
+     <input type="range" min="1" max="10" value="<%= typeof req.body.q7 !== 'undefined' ? req.body.q7 : 5 %>" class="slider" id="q7" name="q7">
+     <span>Value: <span id="q7Value"><%= typeof req.body.q7 !== 'undefined' ? req.body.q7 : 5 %></span></span>
+    </div>
+
+    <label for="q8">Question 8: How easy was it to use our product?</label>
+    <div class="slidecontainer">
+      <input type="range" min="1" max="10" value="<%= typeof req.body.q8 !== 'undefined' ? req.body.q8 : 5 %>" class="slider" id="q8" name="q8">
+      <span>Value: <span id="q8Value"><%= typeof req.body.q8 !== 'undefined' ? req.body.q8 : 5 %></span></span>
+    </div>
+
+    <label for="q9">Question 9: How well does our product meet your needs?</label>
+    <div class="slidecontainer">
+     <input type="range" min="1" max="10" value="<%= typeof req.body.q9 !== 'undefined' ? req.body.q9 : 5 %>" class="slider" id="q9" name="q9">
+     <span>Value: <span id="q9Value"><%= typeof req.body.q9 !== 'undefined' ? req.body.q9 : 5 %></span></span>
+    </div>
+
+    <label for="q10">Question 10: How likely are you to purchase our product again?</label>
+    <div class="slidecontainer">
+      <input type="range" min="1" max="10" value="<%= typeof req.body.q10 !== 'undefined' ? req.body.q10 : 5 %>" class="slider" id="q10" name="q10">
+      <span>Value: <span id="q10Value"><%= typeof req.body.q10 !== 'undefined' ? req.body.q10 : 5 %></span></span>
+    </div>
+
+    <br><br>
+    <!-- Question 11 -->
+    <div class="form-group">
+      <label for="q11">Question 11:</label>
+      <input type="text" id="q11" name="question11">
+    </div>
+
+    <!-- Question 12 -->
+    <div class="form-group">
+      <label for="q12">Question 12:</label>
+      <input type="text" id="q12" name="question12">
+    </div>
+
+    <!-- Question 13 -->
+    <div class="form-group">
+      <label for="q13">Question 13:</label>
+      <input type="text" id="q13" name="question13">
+    </div>
+
+    <!-- Question 14 -->
+    <div class="form-group">
+      <label for="q14">Question 14:</label>
+      <input type="text" id="q14" name="question14">
+    </div>
+
+    <!-- Question 15 -->
+    <div class="form-group">
+      <label for="q15">Question 15:</label>
+      <input type="text" id="q15" name="question15">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" id="submit-btn">Submit</button>
+    </div>
+  </form>
+ 
+    </main>
+    <br><br>
+    <footer>
+      <p>&copy; 2023 TeamInnovation Inc.</p>
+    </footer>
