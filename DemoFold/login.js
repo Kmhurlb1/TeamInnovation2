@@ -88,7 +88,7 @@ app.post('/auth', (req, res) => {
         let role = results[0].user_type;
 
         //data variables from datbase
-        let fname = results[0].fname;
+        //let fname = results[0].fname;
         let score = results[0].score;
 
         // Check if the user is an admin ------------
@@ -308,16 +308,16 @@ app.get('/admin_dashboard.ejs', function (req, res) {
     res.render('admin_dashboard.ejs', { fname: req.session.fname, score: '10' });
 });
 
-app.get('/dashboard', function (req, res) {
+app.get('/dashboard.ejs', function (req, res) {
     res.render('dashboard.ejs', { fname: req.session.fname , score: '10'});
 });
 
-app.get('/points', function (req, res) {
+app.get('/points.ejs', function (req, res) {
     res.render('points.ejs', { fname: req.session.fname, score: '10' });
 });
 
-app.get('/surveys.ejs', function (req, res) {
-    res.render('survey.ejs', { fname: 'Bob', score: '10' });
+app.get('/survey.ejs', function (req, res) {
+    res.render('survey.ejs', { fname: req.session.fname, score: '10' });
 });
 
 
