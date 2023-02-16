@@ -11,6 +11,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const { format } = require('node:path/win32');
+const bodyParser = require('body-parser');
 
 var fileExtensions = {
      ".html":    "text/html",
@@ -25,6 +26,8 @@ var fileExtensions = {
 
 const app = express();
 
+// Use body-parser middleware to parse request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to the database
 const connection = mysql.createConnection({
@@ -59,6 +62,8 @@ app.get('/', function (req, res) {
 
 
 
+
+
 // Handle login requests
 app.post('/auth', (req, res) => {
   let email = req.body.email;
@@ -83,7 +88,7 @@ app.post('/auth', (req, res) => {
         let role = results[0].user_type;
 
         //data variables from datbase
-        //let fname = results[0].first_name;
+        let fname = results[0].fname;
         let score = results[0].score;
 
         // Check if the user is an admin ------------
@@ -210,6 +215,61 @@ app.post('/reset_password', (req, res) => {
   });
 });
 
+//Shows chosen value of sliding scale response questions to user
+function updateSliderValue(sliderId, valueId) {
+    // Get the slider element and its value
+    const slider = document.getElementById(sliderId);
+    const value = slider.value;
+
+    // Update the value of the span element
+    const valueSpan = document.getElementById(valueId);
+    valueSpan.textContent = value;
+}
+
+// POST route for handling form submission
+app.post('/surveys', (req, res) => {
+    const surveyResponses = {
+        name: req.body.name,
+        email: req.body.email,
+        question1: req.body.question1 === 'yes' ? true : false,
+        question2: req.body.question2 === 'yes' ? true : false,
+        question3: req.body.question3 === 'yes' ? true : false,
+        question4: req.body.question4 === 'yes' ? true : false,
+        question5: req.body.question5 === 'yes' ? true : false,
+        question6: req.body.question6,
+        question7: req.body.question7,
+        question8: req.body.question8,
+        question9: req.body.question9,
+        question10: req.body.question10,
+        question11: req.body.question11,
+        question12: req.body.question12,
+        question13: req.body.question13,
+        question14: req.body.question14,
+        question15: req.body.question15,
+
+        // add additional survey questions here
+    };
+
+    // check if all required fields are filled out
+    if (   surveyResponses.question1 !== undefined && surveyResponses.question2 !== undefined
+        && surveyResponses.question3 !== undefined && surveyResponses.question4 !== undefined
+        && surveyResponses.question5 !== undefined
+        && surveyResponses.question6 !== undefined && surveyResponses.question7 !== undefined
+        && surveyResponses.question8 !== undefined && surveyResponses.question9 !== undefined
+        && surveyResponses.question10 !== undefined && surveyResponses.question11
+        && surveyResponses.question12 && surveyResponses.question13
+        && surveyResponses.question14 && surveyResponses.question15) {
+        // Process the form data here and send a response
+        res.send(`Thank you for completing the survey, ${surveyResponses.name}!`);
+    } else {
+        // if not all required fields are filled out, send an error response
+        res.status(400).send('Please fill out all required fields.');
+    }
+});
+
+  
+
+
 /*
 //Forwarding
 // http://localhost:8080/dashboard
@@ -256,9 +316,10 @@ app.get('/points', function (req, res) {
     res.render('points.ejs', { fname: req.session.fname, score: '10' });
 });
 
-app.get('/survey.ejs', function (req, res) {
-    res.render('survey.ejs', { fname: req.session.fname, score: '10' });
+app.get('/surveys.ejs', function (req, res) {
+    res.render('survey.ejs', { fname: 'Bob', score: '10' });
 });
+
 
 // Start the server
 app.listen(8080, () => {
