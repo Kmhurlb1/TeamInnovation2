@@ -98,6 +98,7 @@ app.post('/auth', (req, res) => {
           
           res.render('admin_dash.ejs', { email: req.session.email, 
           fname: req.session.fname, score: score });
+
           
           app.get('/add_user.html', function (req, res) {
             // Render add_user.html template
@@ -105,7 +106,7 @@ app.post('/auth', (req, res) => {
           });
 
           //Admin can update user profile
-          // Admin can add a new user
+          // Admin can add a new user         
 
           app.post('/add_user', function(req, res) {
           // Get the new user information from the form
@@ -342,6 +343,15 @@ app.get('/points.ejs', function (req, res) {
     res.render('points.ejs', { fname: req.session.fname, score: '10' });
 });
 
+app.get('/goals.ejs', function (req, res) {
+  res.render('goals.ejs', { fname: req.session.fname, score: '10' });
+});
+
+app.get('/adManage_survey.ejs', function (req, res) {
+  res.render('adManage_survey.ejs', { fname: req.session.fname, score: '10' });
+});
+
+
 app.get('/survey.ejs', function (req, res) {
   res.render('survey.ejs', {
       req: req,
@@ -370,3 +380,13 @@ app.get('/survey.ejs', function (req, res) {
 app.listen(8080, () => {
   console.log('Listening on port 8080. Its listening on http://127.0.0.1:8080 or http://localhost:8080');
 });
+
+
+// Time control so the server does not auto shut off - If making login.js file change the server needs to be stopped(ctrl+c)... 
+//and the document needs to be saved in order for the changes to show up 
+for (let i = 0; i < 10; i++) {
+  setTimeout(() => {
+    connection.query('SELECT user_id FROM accounts',)
+    console.log('.');
+  }, i * 30000); //30000 = 30 Seconds
+}
