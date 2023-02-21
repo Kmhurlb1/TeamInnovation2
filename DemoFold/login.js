@@ -351,45 +351,7 @@ app.get('/adManage_survey.ejs', function (req, res) {
   res.render('adManage_survey.ejs', { fname: req.session.fname, score: '10' });
 });
 
-app.get('/survey.ejs', function (req, res) {
-    res.render('survey.ejs', { fname: req.session.fname, score: '10' });
-});
 
-
-
-
-
-
-app.get('/survey', function (req, res) {
-    // Serve the survey.ejs file
-    res.sendFile(path.join(__dirname + '/survey.ejs'));
-});
-
-
-app.post('/submit-survey', function (req, res) {
-    // TODO: Handle the form submission and save the data to the database
-    // Redirect the user to the dashboard
-    res.redirect('/dashboard');
-});
-
-app.get('/survey-questions', function (req, res) {
-    connection.query('SELECT * FROM survey_questions', function (error, results, fields) {
-        if (error) throw error;
-        res.json(results);
-    });
-});
-
-app.get('/', function (req, res) {
-    connection.query('SELECT * FROM survey_questions', function (error, results, fields) {
-        if (error) throw error;
-        res.render('survey.ejs', { questions: results });
-    });
-});
-
-
-
-
-/*
 app.get('/survey.ejs', function (req, res) {
   res.render('survey.ejs', {
       req: req,
@@ -412,51 +374,19 @@ app.get('/survey.ejs', function (req, res) {
       q15Value: typeof req.query.q15 !== 'undefined' ? req.query.q15 : '',
   });
 });
-*/
 
-// Define the route for the survey page
-app.get('/survey', (req, res) => {
-    // Define the SQL query to retrieve the survey questions
-    const sql = 'SELECT * FROM survey_questions';
-
-    // Execute the query
-    db.query(sql, (err, results) => {
-        if (err) {
-            console.error('Error executing query: ', err);
-            return;
-        }
-
-        // Generate the HTML for the survey form using the results of the query
-        let html = '<form method="post" action="/survey">';
-        for (let i = 0; i < results.length; i++) {
-            const question = results[i].question;
-            const questionId = `${question}${results[i].id}`;
-            html += `<label for="${questionId}">${question}</label><br>`;
-            html += `<input type="radio" id="${questionId}" name="${questionId}" value="yes"> Yes<br>`;
-            html += `<input type="radio" id="${questionId}" name="${questionId}" value="no"> No<br><br>`;
-        }
-        html += '<input type="submit" value="Submit"></form>';
-
-        res.send(html);
-    });
-});
-
-// Define the route for handling the survey form submission
-app.post('/survey', bodyParser.urlencoded({ extended: true }), (req, res) => {
-    // Process the form data here and send a response
-    res.send('Thank you for completing the survey!');
-});
 
 // Start the server
 app.listen(8080, () => {
-    console.log('Listening on port 8080. It\'s listening on http://127.0.0.1:8080 or http://localhost:8080');
+  console.log('Listening on port 8080. Its listening on http://127.0.0.1:8080 or http://localhost:8080');
 });
 
-// Time control so the server does not auto shut off
-// If making login.js file change the server needs to be stopped (ctrl+c) and the document needs to be saved in order for the changes to show up
+
+// Time control so the server does not auto shut off - If making login.js file change the server needs to be stopped(ctrl+c)... 
+//and the document needs to be saved in order for the changes to show up 
 for (let i = 0; i < 10; i++) {
-    setTimeout(() => {
-        connection.query('SELECT user_id FROM accounts');
-        console.log('.');
-    }, i * 30000); //30000 = 30 Seconds
+  setTimeout(() => {
+    connection.query('SELECT user_id FROM accounts',)
+    console.log('.');
+  }, i * 30000); //30000 = 30 Seconds
 }
