@@ -3,15 +3,42 @@
   <head>
     <meta charset="UTF-8">
     <title>TeamInnovation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+      // add an event listener for the slider input for each question
+      $('#q6').on('input', function() {
+        $('#q6-value').text($(this).val());
+      });
+      $('#q7').on('input', function() {
+        $('#q7-value').text($(this).val());
+      });
+      $('#q8').on('input', function() {
+        $('#q8-value').text($(this).val());
+      });
+      $('#q9').on('input', function() {
+        $('#q9-value').text($(this).val());
+      });
+      $('#q10').on('input', function() {
+        $('#q10-value').text($(this).val());
+      });
+    });
+  </script>
     <style>
 
     form {
-    max-width: 600px;
-    margin: 0 auto;
-  }
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px #ccc;
+      border-radius: 10px;
+      padding: 20px;
+    }
   .form-group {
     margin: 1rem 0;
   }
+
   label {
     display: block;
     font-size: 1.2rem;
@@ -37,6 +64,30 @@
     cursor: pointer;
     margin-top: 1rem;
   }
+      input, select, textarea {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+        input:focus, select:focus, textarea:focus {
+      outline: none;
+      border: 2px solid #00b0a9;
+    }
+        button {
+      background-color: #00b0a9;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #008b83;
+    }
   .form-group.hidden {
     display: none;
   }
@@ -229,14 +280,15 @@
       </ul>
     </nav>
      <main>
-  <h1>Survey</h1>
+  
 
   <form action="/surveys" method="post">
 
+  <h1 style="font-size: 40px; text-align: center;">Employee Survey</h1>
 
     <!-- Question 1 -->
     <div class="form-group">
-      <label for="q1">Question 1:</label>
+      <label for="q1">I would recommend this company as a great place to work.</label>
       <select id="q1" name="question1">
          <option value="yes">Yes</option>
          <option value="no">No</option>
@@ -245,7 +297,7 @@
 
     <!-- Question 2 -->
     <div class="form-group">
-      <label for="q2">Question 2:</label>
+      <label for="q2">I believe there are good career opportunities for me at this company.</label>
       <select id="q1" name="question2">
          <option value="yes">Yes</option>
          <option value="no">No</option>
@@ -254,7 +306,7 @@
 
     <!-- Question 3 -->
     <div class="form-group">
-      <label for="q3">Question 3:</label>
+      <label for="q3">I genuinely identify with the values of this company.</label>
       <select id="q1" name="question3">
          <option value="yes">Yes</option>
          <option value="no">No</option>
@@ -263,7 +315,7 @@
 
     <!-- Question 4 -->
     <div class="form-group">
-      <label for="q4">Question 4:</label>
+      <label for="q4">This company effectively communicates the goals and strategies set by management.</label>
       <select id="q1" name="question4">
          <option value="yes">Yes</option>
          <option value="no">No</option>
@@ -272,7 +324,7 @@
 
     <!-- Question 5 -->
     <div class="form-group">
-      <label for="q5">Question 5:</label>
+      <label for="q5">I know what is expected of me to be successful in my role.</label>
       <select id="q1" name="question5">
          <option value="yes">Yes</option>
          <option value="no">No</option>
@@ -280,64 +332,68 @@
     </div>
     <br><br>
 
-    <label for="q6">Question 6: How likely are you to recommend our product?</label>
-    <div class="slidecontainer">
-     <input type="range" min="1" max="10" value="<%= typeof req.body.q6 !== 'undefined' ? req.body.q6 : 5 %>" class="slider" id="q6" name="q6">
-     <span>Value: <span id="q6Value"><%= typeof req.body.q6 !== 'undefined' ? req.body.q6 : 5 %></span></span>
-    </div>
-
-    <label for="q7">Question 7: How satisfied are you with our product?</label>
-    <div class="slidecontainer">
-     <input type="range" min="1" max="10" value="<%= typeof req.body.q7 !== 'undefined' ? req.body.q7 : 5 %>" class="slider" id="q7" name="q7">
-     <span>Value: <span id="q7Value"><%= typeof req.body.q7 !== 'undefined' ? req.body.q7 : 5 %></span></span>
-    </div>
-
-    <label for="q8">Question 8: How easy was it to use our product?</label>
-    <div class="slidecontainer">
-      <input type="range" min="1" max="10" value="<%= typeof req.body.q8 !== 'undefined' ? req.body.q8 : 5 %>" class="slider" id="q8" name="q8">
-      <span>Value: <span id="q8Value"><%= typeof req.body.q8 !== 'undefined' ? req.body.q8 : 5 %></span></span>
-    </div>
-
-    <label for="q9">Question 9: How well does our product meet your needs?</label>
-    <div class="slidecontainer">
-     <input type="range" min="1" max="10" value="<%= typeof req.body.q9 !== 'undefined' ? req.body.q9 : 5 %>" class="slider" id="q9" name="q9">
-     <span>Value: <span id="q9Value"><%= typeof req.body.q9 !== 'undefined' ? req.body.q9 : 5 %></span></span>
-    </div>
-
-    <label for="q10">Question 10: How likely are you to purchase our product again?</label>
-    <div class="slidecontainer">
-      <input type="range" min="1" max="10" value="<%= typeof req.body.q10 !== 'undefined' ? req.body.q10 : 5 %>" class="slider" id="q10" name="q10">
-      <span>Value: <span id="q10Value"><%= typeof req.body.q10 !== 'undefined' ? req.body.q10 : 5 %></span></span>
-    </div>
+    <!-- Question 6 -->
+    <label for="q6">How would you rate your work-life balance?</label>
+    <input type="range" id="q6" name="q6" min="0" max="10" value="5">
+    <div>Value: <span id="q6-value">5</span></div>
 
     <br><br>
+
+    <!-- Question 7 -->
+    <label for="q7">How satisfied are you in your current role?</label>    
+    <input type="range" id="q7" name="q7" min="0" max="10" value="5">
+    <div>Value: <span id="q7-value">5</span></div>
+
+    <br><br>
+
+    <!-- Question 8 -->
+    <label for="q8">How valued do you feel at work?</label>
+    <input type="range" id="q8" name="q8" min="0" max="10" value="5">
+    <div>Value: <span id="q8-value">5</span></div>
+
+    <br><br>
+
+    <!-- Question 9 -->
+    <label for="q9">How would you rate the performance of your direct supervisor?</label>
+    <input type="range" id="q9" name="q9" min="0" max="10" value="5">
+    <div>Value: <span id="q9-value">5</span></div>
+
+    <br><br>
+
+    <!-- Question 10 -->
+    <label for="q10">How would you rate your colleagues and team members?</label>
+    <input type="range" id="q10" name="q10" min="0" max="10" value="5">
+    <div>Value: <span id="q10-value">5</span></div>
+
+    <br><br>
+
     <!-- Question 11 -->
     <div class="form-group">
-      <label for="q11">Question 11:</label>
+      <label for="q11">What changes in the company would make you more satisfied with your job?</label>
       <input type="text" id="q11" name="question11">
     </div>
 
     <!-- Question 12 -->
     <div class="form-group">
-      <label for="q12">Question 12:</label>
+      <label for="q12">What is one thing you would like senior leadership to know?</label>
       <input type="text" id="q12" name="question12">
     </div>
 
     <!-- Question 13 -->
     <div class="form-group">
-      <label for="q13">Question 13:</label>
+      <label for="q13">Which company value resonates with you the most? The least?</label>
       <input type="text" id="q13" name="question13">
     </div>
 
     <!-- Question 14 -->
     <div class="form-group">
-      <label for="q14">Question 14:</label>
+      <label for="q14">Are you happy with the direction the company is headed?</label>
       <input type="text" id="q14" name="question14">
     </div>
 
     <!-- Question 15 -->
     <div class="form-group">
-      <label for="q15">Question 15:</label>
+      <label for="q15">What's one thing our company can do to support your wellbeing?</label>
       <input type="text" id="q15" name="question15">
     </div>
 
@@ -346,6 +402,7 @@
     </div>
   </form>
  
+
     </main>
     <br><br>
     <footer>

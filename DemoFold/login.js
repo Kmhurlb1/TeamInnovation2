@@ -242,17 +242,6 @@ app.post('/reset_password', (req, res) => {
   });
 });
 
-//Shows chosen value of sliding scale response questions to user
-function updateSliderValue(sliderId, valueId) {
-    // Get the slider element and its value
-    const slider = document.getElementById(sliderId);
-    const value = slider.value;
-
-    // Update the value of the span element
-    const valueSpan = document.getElementById(valueId);
-    valueSpan.textContent = value;
-}
-
 // POST route for handling form submission
 app.post('/surveys', (req, res) => {
     const surveyResponses = {
@@ -350,6 +339,8 @@ app.get('/goals.ejs', function (req, res) {
 app.get('/adManage_survey.ejs', function (req, res) {
   res.render('adManage_survey.ejs', { fname: req.session.fname, score: '10' });
 });
+
+
 
 
 app.get('/survey.ejs', function (req, res) {
