@@ -68,6 +68,7 @@ app.get('/', function (req, res) {
 app.post('/auth', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
+  let user_id;
 
   // Look up the user in the database
   if (email && password) {
@@ -161,15 +162,16 @@ app.post('/auth', (req, res) => {
             req.session.user_id = results[0].user_id;
             console.log(req.session.user_id);
             let user_id = req.session.user_id;
+            global.user_id = results[0].user_id;
             console.log(user_id);
-          });
-  
 
+            
+            
+          });
+
+  
           res.render('dashboard.ejs', { email: req.session.email,
              fname: req.session.fname, score : score });
-
-
-
 
 
         }
@@ -258,18 +260,19 @@ app.post('/reset_password', (req, res) => {
 
 
 app.post('/surveys', (req, res) => {
-  let user_id = req.session.user_id; // retrieve the user's ID from the session data
+  //let user_id = req.session.user_id; // retrieve the user's ID from the session data
   let question1 = req.body.question1;
   let question2 = req.body.question2;
   let question3 = req.body.question3;
   const date = new Date();
   const dateString = date.toLocaleDateString();
   console.log(question2);
-  connection.query('INSERT INTO survey_test (user_id, date_sent, question1, question2, question3) VALUES (?, ?, ?, ?, ?)', [user_id, dateString, question1, question2, question3], function(error, results, fields) {
+  connection.query('INSERT INTO survey_test (user_id, date_sent, question1, question2, question3) VALUES  (?, ?, ?, ?, ?)', [user_id, dateString, question1, question2, question3], function(error, results, fields) {
     if (error) throw error;
     // Redirect to a thank-you page
-    res.redirect('/survey.ejs');
+    res.send(`Thank you for completing the survey!`);
   });
+
 });
 
 
