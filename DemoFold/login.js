@@ -152,6 +152,17 @@ app.post('/auth', (req, res) => {
 
 
 
+          //
+          app.get('/adminDate.ejs', function(req, res) {
+            res.render('adminDate.ejs', );
+          });
+
+
+
+
+
+
+
         } else {
           //If not an admin
           // Redirect the regular user to the regular user dashboard
