@@ -91,6 +91,7 @@ app.post('/auth', (req, res) => {
         //let fname = results[0].fname;
         let score = results[0].score;
 
+
         // Check if the user is an admin ------------
         if (role === 'A') {
           // Redirect the admin to the admin dashboard
@@ -129,6 +130,9 @@ app.post('/auth', (req, res) => {
               fname: req.session.fname, score: score });
           });
 
+
+
+
           //Removing A User / Deny Access
           app.get('/remove_user.html', function (req, res) {
             res.sendFile(path.join(__dirname + '/remove_user.html'));
@@ -151,6 +155,15 @@ app.post('/auth', (req, res) => {
           //If not an admin
           // Redirect the regular user to the regular user dashboard
 
+          let user_id = 0;
+          connection.query('SELECT user_id from accounts where email = ?', [email], function(error, results, fields) {
+            if (error) throw error;
+            req.session.user_id = results[0].user_id;
+            console.log(req.session.user_id);
+            let user_id = req.session.user_id;
+            console.log(user_id);
+          });
+  
 
           res.render('dashboard.ejs', { email: req.session.email,
              fname: req.session.fname, score : score });
@@ -241,6 +254,24 @@ app.post('/reset_password', (req, res) => {
     }
   });
 });
+
+
+
+app.post('/surveys', (req, res) => {
+  let user_id = req.session.user_id; // retrieve the user's ID from the session data
+  let question1 = req.body.question1;
+  let question2 = req.body.question2;
+  let question3 = req.body.question3;
+  const date = new Date();
+  const dateString = date.toLocaleDateString();
+  console.log(question2);
+  connection.query('INSERT INTO survey_test (user_id, date_sent, question1, question2, question3) VALUES (?, ?, ?, ?, ?)', [user_id, dateString, question1, question2, question3], function(error, results, fields) {
+    if (error) throw error;
+    // Redirect to a thank-you page
+    res.redirect('/survey.ejs');
+  });
+});
+
 
 // POST route for handling form submission
 app.post('/surveys', (req, res) => {
@@ -363,8 +394,18 @@ app.get('/survey.ejs', function (req, res) {
       q13Value: typeof req.query.q13 !== 'undefined' ? req.query.q13 : '',
       q14Value: typeof req.query.q14 !== 'undefined' ? req.query.q14 : '',
       q15Value: typeof req.query.q15 !== 'undefined' ? req.query.q15 : '',
+
+
+
+      
+
+
+
   });
 });
+
+
+
 
 
 // Start the server
