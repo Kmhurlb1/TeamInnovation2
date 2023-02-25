@@ -287,13 +287,26 @@ app.post('/reset_password', (req, res) => {
 
 app.post('/surveys', (req, res) => {
   //let user_id = req.session.user_id; // retrieve the user's ID from the session data
-  let question1 = req.body.question1;
-  let question2 = req.body.question2;
-  let question3 = req.body.question3;
+    let question1 = req.body.question1;
+    let question2 = req.body.question2;
+    let question3 = req.body.question3;
+    let question4 = req.body.question4;
+    let question5 = req.body.question5;
+    let question6 = req.body.question6;
+    let question7 = req.body.question7;
+    let question8 = req.body.question8;
+    let question9 = req.body.question9;
+    let question10 = req.body.question10;
+    let question11 = req.body.question11;
+    let question12 = req.body.question12;
+    let question13 = req.body.question13;
+    let question14 = req.body.question14;
+    let question15 = req.body.question15;
+
   const date = new Date();
   const dateString = date.toLocaleDateString();
   console.log(question2);
-  connection.query('INSERT INTO survey_test (user_id, date_sent, question1, question2, question3) VALUES  (?, ?, ?, ?, ?)', [user_id, dateString, question1, question2, question3], function(error, results, fields) {
+    connection.query('INSERT INTO survey_test (user_id, date_sent, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [user_id, dateString, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15], function(error, results, fields) {
     if (error) throw error;
     // Redirect to a thank-you page
     res.send(`Thank you for completing the survey!`);
@@ -301,7 +314,7 @@ app.post('/surveys', (req, res) => {
 
 });
 
-
+/*
 // POST route for handling form submission
 app.post('/surveys', (req, res) => {
     const surveyResponses = {
@@ -342,7 +355,7 @@ app.post('/surveys', (req, res) => {
         res.status(400).send('Please fill out all required fields.');
     }
 });
-
+*/
   
 
 
