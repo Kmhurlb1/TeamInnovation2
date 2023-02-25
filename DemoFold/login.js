@@ -156,6 +156,21 @@ app.post('/auth', (req, res) => {
           app.get('/adminDate.ejs', function(req, res) {
             res.render('adminDate.ejs', );
           });
+          
+
+          app.post('/submit-form', function(req, res){
+
+            const dated = req.body.date;
+            const dept = req.body.department
+            
+
+            connection.query('ALTER TABLE employee_applications ADD COLUMN due_date DATE DEFAULT ? (SELECT user_dept FROM accounts WHERE user_dept = ?)', [dated, dept], function(error, results, fields) {
+            
+              if (error) throw error;
+              console.log(DeptUp);
+            });
+
+          });
 
 
 
