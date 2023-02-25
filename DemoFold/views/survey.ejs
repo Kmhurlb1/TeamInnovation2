@@ -276,6 +276,7 @@
         <li><a href="/points.ejs">Points</a></li>
         <li><a href="/goals.ejs">Goals</a></li>
         <li><a href="/survey.ejs">Surveys</a></li>
+        <li><a href="/calendar.ejs">Calendar</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
     </nav>
@@ -284,123 +285,194 @@
 
   <form action="/surveys" method="post">
 
+   <div class="form-group">
     <h1 style="font-size: 40px; text-align: center;">Employee Survey</h1>
+    </div>
+
 
       <!-- Question 1 -->
-      <div class="form-group">
-        <label for="q1">I would recommend this company as a great place to work.</label>
-        <select id="q1" name="question1">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
+      
+     <!-- Question 1 -->
+<% if (surveyData && surveyData.q1_yn_selected === 1) { %>
+  <div class="form-group">
+    <label for="q1">I would recommend this company as a great place to work.</label>
+    <select id="q1" name="question1">
+      <option value=""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+<% } %>
 
-      <!-- Question 2 -->
-      <div class="form-group">
-        <label for="q2">I believe there are good career opportunities for me at this company.</label>
-        <select id="q2" name="question2">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
+<br><br>
 
-      <!-- Question 3 -->
-      <div class="form-group">
-        <label for="q3">I genuinely identify with the values of this company.</label>
-        <select id="q3" name="question3">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
+<!-- Question 2 -->
+<% if (surveyData && surveyData.q2_yn_selected === 1) { %>
+  <div class="form-group">
+    <label for="q2">I believe there are good career opportunities for me at this company.</label>
+    <select id="q2" name="question2">
+      <option value=""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+<% } %>
 
-      <!-- Question 4 -->
-      <div class="form-group">
-        <label for="q4">This company effectively communicates the goals and strategies set by management.</label>
-        <select id="q4" name="question4">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
+<br><br>
 
-      <!-- Question 5 -->
-      <div class="form-group">
-        <label for="q5">I know what is expected of me to be successful in my role.</label>
-        <select id="q5" name="question5">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-      <br><br>
+<!-- Question 3 -->
+<% if (surveyData && surveyData.q3_yn_selected === 1) { %>
+  <div class="form-group">
+    <label for="q3">I genuinely identify with the values of this company.</label>
+    <select id="q3" name="question3">
+      <option value=""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+<% } %>
+
+<br><br>
+
+<!-- Question 4 -->
+<% if (surveyData && surveyData.q4_yn_selected === 1) { %>
+  <div class="form-group">
+    <label for="q4">This company effectively communicates the goals and strategies set by management.</label>
+    <select id="q4" name="question4">
+      <option value=""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+<% } %>
+
+<br><br>
+
+<!-- Question 5 -->
+<% if (surveyData && surveyData.q5_yn_selected === 1) { %>
+  <div class="form-group">
+    <label for="q5">I know what is expected of me to be successful in my role.</label>
+    <select id="q5" name="question5">
+      <option value=""></option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+<% } %>
+
+<br><br>
 
       <!-- Question 6 -->
+      <% if (surveyData && surveyData.q1_scale_selected === 1) { %>
+      <div class="form-group" >
       <label for="q6">How would you rate your work-life balance?</label>
       <input type="range" id="q6" name="q6" min="0" max="10" value="5">
-      <div>Value: <span id="q6-value">5</span></div>
+      <div>Value: <span id="q6-value"></span></div>
+      </div>
+      <% } %>
 
       <br><br>
 
       <!-- Question 7 -->
+      <% if (surveyData && surveyData.q2_scale_selected === 1) { %>
+      <div class="form-group" >
       <label for="q7">How satisfied are you in your current role?</label>    
       <input type="range" id="q7" name="q7" min="0" max="10" value="5">
-      <div>Value: <span id="q7-value">5</span></div>
+      <div>Value: <span id="q7-value"></span></div>
+      </div>
+      <% } %>
 
       <br><br>
 
       <!-- Question 8 -->
+      <% if (surveyData && surveyData.q3_scale_selected === 1) { %>
+      <div class="form-group" >
       <label for="q8">How valued do you feel at work?</label>
       <input type="range" id="q8" name="q8" min="0" max="10" value="5">
-      <div>Value: <span id="q8-value">5</span></div>
+      <div>Value: <span id="q8-value"></span></div>
+      </div>
+      <% } %>
 
       <br><br>
 
       <!-- Question 9 -->
+      <% if (surveyData && surveyData.q4_scale_selected === 1) { %>
+      <div class="form-group" >
       <label for="q9">How would you rate the performance of your direct supervisor?</label>
       <input type="range" id="q9" name="q9" min="0" max="10" value="5">
-      <div>Value: <span id="q9-value">5</span></div>
+      <div>Value: <span id="q9-value"></span></div>
+      </div>
+      <% } %>
 
       <br><br>
 
       <!-- Question 10 -->
+      <% if (surveyData && surveyData.q5_scale_selected === 1) { %>
+      <div class="form-group" >
       <label for="q10">How would you rate your colleagues and team members?</label>
       <input type="range" id="q10" name="q10" min="0" max="10" value="5">
-      <div>Value: <span id="q10-value">5</span></div>
+      <div>Value: <span id="q10-value"></span></div>
+      </div>
+      <% } %>
 
       <br><br>
 
       <!-- Question 11 -->
-      <div class="form-group">
+      <% if (surveyData && surveyData.q5_yn_selected === 1) { %>
+      <div class="form-group" >
         <label for="q11">What changes in the company would make you more satisfied with your job?</label>
         <input type="text" id="q11" name="question11">
       </div>
+      <% } %>
+
+      <br><br>
 
       <!-- Question 12 -->
-      <div class="form-group">
+      <% if (surveyData && surveyData.q5_yn_selected === 1) { %>
+      <div class="form-group" >
         <label for="q12">What is one thing you would like senior leadership to know?</label>
         <input type="text" id="q12" name="question12">
       </div>
+      <% } %>
+
+      <br><br>
 
       <!-- Question 13 -->
-      <div class="form-group">
+      <% if (surveyData && surveyData.q5_yn_selected === 1) { %>
+      <div class="form-group" >
         <label for="q13">Which company value resonates with you the most? The least?</label>
         <input type="text" id="q13" name="question13">
       </div>
+      <% } %>
+
+      <br><br>
 
       <!-- Question 14 -->
-      <div class="form-group">
+      <% if (surveyData && surveyData.q5_yn_selected === 1) { %>
+      <div class="form-group" >
         <label for="q14">Are you happy with the direction the company is headed?</label>
         <input type="text" id="q14" name="question14">
       </div>
+      <% } %>
+
+      <br><br>
 
       <!-- Question 15 -->
-      <div class="form-group">
+      <% if (surveyData && surveyData.q5_yn_selected === 1) { %>
+      <div class="form-group" >
         <label for="q15">What's one thing our company can do to support your wellbeing?</label>
         <input type="text" id="q15" name="question15">
       </div>
+      <% } %>
 
-      <div class="form-group">
+      <br><br>
+
+      <div class="form-group" >
         <button type="submit" id="submit-btn">Submit</button>
       </div>
   </form>
+
+
 
     </main>
     <br><br>
