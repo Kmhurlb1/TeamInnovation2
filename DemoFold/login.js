@@ -337,6 +337,7 @@ app.post('/surveys', (req, res) => {
     let surveyData = req.session.surveyData;
     let template_id = surveyData.template_id;
     let max_points = surveyData.max_points; 
+    let date_sent = surveyData.date_created;
 
     let a1_yn = req.body.question1 || null;
     let a2_yn = req.body.question2 || null;
@@ -357,9 +358,11 @@ app.post('/surveys', (req, res) => {
     const date = new Date();
     const dateString = date.toISOString().slice(0, 19).replace('T', ' ');
 
+    //const date_sent = date.toISOString().slice(0, 19).replace('T', ' ');
 
 
-    connection.query('INSERT INTO completed_surveys (survey_id, template_id, user_id, date_sent, date_completed, points_awarded, a1_yn, a2_yn, a3_yn, a4_yn, a5_yn, a1_scale, a2_scale, a3_scale, a4_scale, a5_scale, a1_fr, a2_fr, a3_fr, a4_fr, a5_fr) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_id, template_id, user_id, dateString, dateString, max_points, a1_yn, a2_yn, a3_yn, a4_yn, a5_yn, a1_scale, a2_scale, a3_scale, a4_scale, a5_scale, a1_fr, a2_fr, a3_fr, a4_fr, a5_fr], function (error, results, fields) {
+
+    connection.query('INSERT INTO completed_surveys (survey_id, template_id, user_id, date_sent, date_completed, points_awarded, a1_yn, a2_yn, a3_yn, a4_yn, a5_yn, a1_scale, a2_scale, a3_scale, a4_scale, a5_scale, a1_fr, a2_fr, a3_fr, a4_fr, a5_fr) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_id, template_id, user_id, date_sent, dateString, max_points, a1_yn, a2_yn, a3_yn, a4_yn, a5_yn, a1_scale, a2_scale, a3_scale, a4_scale, a5_scale, a1_fr, a2_fr, a3_fr, a4_fr, a5_fr], function (error, results, fields) {
             if (error) throw error;
 
 
