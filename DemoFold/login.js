@@ -315,8 +315,11 @@ app.post('/add-survey-template', function (req, res) {
     var q5_fr_selected = req.body.q5_fr_selected || null;
     var max_points = req.body.max_points || null;
 
+    const date = new Date();
+    const dateString = date.toISOString().slice(0, 19).replace('T', ' ');
+
     // Insert new survey template into database
-    connection.execute('INSERT INTO survey_templates (survey_type, survey_dept, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_type, survey_dept, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points], function (error, results, fields) {
+    connection.execute('INSERT INTO survey_templates (survey_dept, date_created, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_dept, dateString, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points], function (error, results, fields) {
         if (error) throw error;
         res.redirect('/adManage_survey.ejs');
     });
