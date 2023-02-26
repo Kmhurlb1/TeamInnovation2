@@ -1,4 +1,4 @@
-# TeamInnovation2
+# TeamInnovation
 
 # 1. download node.js at: https://nodejs.org/en/
 # 2. Open "Node.js Command Prompt"
