@@ -5,20 +5,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Survey</title>
-    <section class="summary">
-        <h2>Review Survey</h2>
-        <p>Review Incoming Surveys</p>
-    </section>
 
-    <section class="survey">
-        <h2>Data</h2>
-        
-
-    </section>
-    
-
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    
+  <h1>Survey Templates</h1>
+
+  
+  <h2>Add New Survey Template</h2>
+  <form action="/add-survey-template" method="post">
+
+    <label for="survey_type">Survey Type:</label>
+    <input type="text" id="survey_type" name="survey_type"><br>
+
+    <label for="survey_dept">Survey Department:</label>
+    <input type="text" id="survey_dept" name="survey_dept"><br>
+
+    <label for="q1_yn_selected">Question 1 Yes/No:</label>
+    <input type="text" id="q1_yn_selected" name="q1_yn_selected"><br>
+
+    <label for="q2_yn_selected">Question 2 Yes/No:</label>
+    <input type="text" id="q2_yn_selected" name="q2_yn_selected"><br>
+
+    <label for="q3_yn_selected">Question 3 Yes/No:</label>
+    <input type="text" id="q3_yn_selected" name="q3_yn_selected"><br>
+
+    <label for="q4_yn_selected">Question 4 Yes/No:</label>
+    <input type="text" id="q4_yn_selected" name="q4_yn_selected"><br>
+
+    <label for="q5_yn_selected">Question 5 Yes/No:</label>
+    <input type="text" id="q5_yn_selected" name="q5_yn_selected"><br>
+
+    <label for="q1_scale_selected">Question 1 Scale:</label>
+    <input type="text" id="q1_scale_selected" name="q1_scale_selected"><br>
+
+    <label for="q2_scale_selected">Question 2 Scale:</label>
+    <input type="text" id="q2_scale_selected" name="q2_scale_selected"><br>
+
+    <label for="q3_scale_selected">Question 3 Scale:</label>
+    <input type="text" id="q3_scale_selected" name="q3_scale_selected"><br>
+
+    <label for="q4_scale_selected">Question 4 Scale:</label>
+    <input type="text" id="q4_scale_selected" name="q4_scale_selected"><br>
+
+    <label for="q5_scale_selected">Question 5 Scale:</label>
+    <input type="text" id="q5_scale_selected" name="q5_scale_selected"><br>
+
+    <label for="q1_fr_selected">Question 1 FR:</label>
+    <input type="text" id="q1_fr_selected" name="q1_fr_selected"><br>
+
+    <label for="q2_fr_selected">Question 2 FR:</label>
+    <input type="text" id="q2_fr_selected" name="q2_fr_selected"><br>
+
+    <label for="q3_fr_selected">Question 3 FR:</label>
+    <input type="text" id="q3_fr_selected" name="q3_fr_selected"><br>
+
+    <label for="q4_fr_selected">Question 4 FR:</label>
+    <input type="text" id="q4_fr_selected" name="q4_fr_selected"><br>
+
+    <label for="q5_fr_selected">Question 5 FR:</label>
+    <input type="text" id="q5_fr_selected" name="q5_fr_selected"><br>
+
+    <label for="max_points">Max Points FR:</label>
+    <input type="text" id="max_points" name="max_points"><br>
+
+    <!-- add this button below the survey form -->
+<form method="POST" action="/add-survey-template">
+  <!-- form fields here -->
+  <button type="submit">Submit Survey</button>
+</form>
+
 </body>
 </html>

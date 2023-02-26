@@ -1,0 +1,318 @@
+<%
+function getDates() {
+  var dates = [];
+  var currentDate = new Date();
+  for (var i = 0; i < 7; i++) {
+    var date = new Date(currentDate);
+    date.setDate(currentDate.getDate() + i);
+    dates.push(date);
+  }
+  return dates;
+}
+%>
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>TeamInnovation</title>
+     <style>
+
+
+         body {
+    font-family: Arial, sans-serif;
+    background-color: #e5f9f5;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+     main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.day-square {
+  font-size: 0.5em;
+  position: relative;
+}
+
+    .calendar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 800px;
+      height: 800px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+        .calendar-container {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+     }
+ 
+
+    .month {
+      margin-bottom: 40px;
+      text-align: center;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+        .prev-month,
+    .next-month {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+
+        .prev-month:hover,
+    .next-month:hover {
+      background-color: #ddd;
+    }
+
+    .current-year {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .spacer {
+      width: 100px;
+      height: 100px;
+      visibility: hidden;
+    }
+        button {
+      background-color: #00b0a9;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #008b83;
+    }
+  .form-group.hidden {
+    display: none;
+  }
+   .error-message {
+    color: red;
+    margin-top: 0.5rem;
+  }
+
+  
+  header {
+    background-color: #00b0a9;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 36px;
+    margin-top: 20px;
+  }
+  
+  header .header-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  header .header-actions a {
+    background-color: #fff;
+    color: #00b0a9;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-left: 20px;
+    text-decoration: none;
+  }
+  
+  nav {
+    background-color: #00b0a9;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  nav a {
+    color: #fff;
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  main {
+    display: flex;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+  
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+  
+  th, td {
+    border: 1px solid #00b0a9;
+    padding: 10px;
+    text-align: left;
+  }
+  
+    th {
+      font-size: 24px;
+      font-weight: bold;
+      padding-bottom: 10px;
+           background-color: #00b0a9;
+      color: #fff;
+    }
+
+      td {
+      font-size: 36px;
+      text-align: center;
+      width: 100px;
+      height: 100px;
+      border: 1px solid black;
+
+    }
+
+    tr {
+ 
+    }
+
+  footer {
+    background-color: #00b0a9;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+    </style>
+      </head>
+  <body>
+    <header>
+      <h1>TeamInnovation Survey Dashboard</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/dashboard.ejs">Home</a></li>
+        <li><a href="/points.ejs">Points</a></li>
+        <li><a href="/goals.ejs">Goals</a></li>
+        <li><a href="/survey.ejs">Surveys</a></li>
+        <li><a href="/calendar.ejs">Calendar</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+     <main>
+
+
+
+
+<!-- calendar.ejs -->
+
+<% const months = [
+  { name: 'January', days: 31 },
+  { name: 'February', days: 28 },
+  { name: 'March', days: 31 },
+  { name: 'April', days: 30 },
+  { name: 'May', days: 31 },
+  { name: 'June', days: 30 },
+  { name: 'July', days: 31 },
+  { name: 'August', days: 31 },
+  { name: 'September', days: 30 },
+  { name: 'October', days: 31 },
+  { name: 'November', days: 30 },
+  { name: 'December', days: 31 }
+]; %>
+
+<div class="calendar-container">
+  <h2>Calendar</h2>
+  <% const d = new Date(); %>
+  <h3><%= d.getFullYear() %></h3>
+  <% months.forEach(month => { %>
+    <table class="month">
+      <thead>
+        <tr>
+          <th colspan="7" class="month-name"><%= month.name %></th>
+        </tr>
+        <tr>
+          <th>Sun</th>
+          <th>Mon</th>
+          <th>Tue</th>
+          <th>Wed</th>
+          <th>Thu</th>
+          <th>Fri</th>
+          <th>Sat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let dayCount = 1; %>
+        <% for (let week = 1; week <= 6; week++) { %>
+          <tr>
+            <% for (let day = 1; day <= 7; day++) { %>
+              <% let goalName = ""; %>
+              <% let goalStart = null; %>
+              <% let goalEnd = null; %>
+              <% goals.forEach(goal => {
+                if (dayCount >= goal.start_date.getDate() && dayCount <= goal.finish_date.getDate()) {
+                  goalName = goal.goal;
+                  goalStart = goal.start_date.toISOString().slice(0, 10);
+                  goalEnd = goal.finish_date.toISOString().slice(0, 10);
+                }
+              }); %>
+              <% if (dayCount > month.days) { %>
+                <td></td>
+              <% } else if (goalName !== "") { %>
+                <td class="day-square has-goal" data-toggle="tooltip" title="<%= goalName %> - <%= goalStart %> to <%= goalEnd %>"><%= dayCount %></td>
+                <% dayCount++; %>
+              <% } else { %>
+                <td class="day-square"><%= dayCount %></td>
+                <% dayCount++; %>
+              <% } %>
+            <% } %>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% }); %>
+</div>
+</body>
+</html>
+
+
+

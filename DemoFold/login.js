@@ -8,6 +8,7 @@ var path = require('path');
 //const mysql = require('mysql');
 const session = require('express-session');
 const express = require('express');
+const app = express();
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const { format } = require('node:path/win32');
@@ -24,7 +25,7 @@ var fileExtensions = {
  
 
 
-const app = express();
+app.use(bodyParser.json());
 
 // Use body-parser middleware to parse request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -69,7 +70,7 @@ app.post('/auth', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let user_id;
-
+  let user_dept;
   // Look up the user in the database
   if (email && password) {
     // Execute SQL query that'll select the account from the database based on the specified Email and password
@@ -82,7 +83,7 @@ app.post('/auth', (req, res) => {
         req.session.loggedin = true;
         req.session.email = email;
         req.session.fname = results[0].first_name; // set the fname value -------- Try out 2/15
-
+        req.session.user_dept = results[0].user_dept;
         // Redirect to home page
 
         // Get the role of the user from the results 
@@ -191,7 +192,16 @@ app.post('/auth', (req, res) => {
             global.user_id = results[0].user_id;
             console.log(user_id);
 
-            
+              let user_dept = 0;
+              connection.query('SELECT user_dept from accounts where email = ?', [email], function (error, results, fields) {
+                  if (error) throw error;
+                  req.session.user_dept = results[0].user_dept;
+                  console.log(req.session.user_dept);
+                  let user_dept = req.session.user_dept;
+                  global.user_dept = results[0].user_dept;
+                  console.log(user_dept);
+              });
+
             
           });
 
@@ -284,24 +294,54 @@ app.post('/reset_password', (req, res) => {
 });
 
 
+// Add new survey template
+app.post('/add-survey-template', function (req, res) {
+    var survey_type = req.body.survey_type;
+    var survey_dept = req.body.survey_dept;
+    var q1_yn_selected = req.body.q1_yn_selected || null;
+    var q2_yn_selected = req.body.q2_yn_selected || null;
+    var q3_yn_selected = req.body.q3_yn_selected || null;
+    var q4_yn_selected = req.body.q4_yn_selected || null;
+    var q5_yn_selected = req.body.q5_yn_selected || null;
+    var q1_scale_selected = req.body.q1_scale_selected || null;
+    var q2_scale_selected = req.body.q2_scale_selected || null;
+    var q3_scale_selected = req.body.q3_scale_selected || null;
+    var q4_scale_selected = req.body.q4_scale_selected || null;
+    var q5_scale_selected = req.body.q5_scale_selected || null;
+    var q1_fr_selected = req.body.q1_fr_selected || null;
+    var q2_fr_selected = req.body.q2_fr_selected || null;
+    var q3_fr_selected = req.body.q3_fr_selected || null;
+    var q4_fr_selected = req.body.q4_fr_selected || null;
+    var q5_fr_selected = req.body.q5_fr_selected || null;
+    var max_points = req.body.max_points || null;
+
+    // Insert new survey template into database
+    connection.execute('INSERT INTO survey_templates (survey_type, survey_dept, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_type, survey_dept, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points], function (error, results, fields) {
+        if (error) throw error;
+        res.redirect('/adManage_survey.ejs');
+    });
+});
+
+
+
 
 app.post('/surveys', (req, res) => {
   //let user_id = req.session.user_id; // retrieve the user's ID from the session data
-    let question1 = req.body.question1;
-    let question2 = req.body.question2;
-    let question3 = req.body.question3;
-    let question4 = req.body.question4;
-    let question5 = req.body.question5;
-    let question6 = parseInt(req.body.q6);
-    let question7 = parseInt(req.body.q7);
-    let question8 = parseInt(req.body.q8);
-    let question9 = parseInt(req.body.q9);
-    let question10 = parseInt(req.body.q10);
-    let question11 = req.body.question11;
-    let question12 = req.body.question12;
-    let question13 = req.body.question13;
-    let question14 = req.body.question14;
-    let question15 = req.body.question15;
+    let question1 = req.body.question1 || null;
+    let question2 = req.body.question2 || null;
+    let question3 = req.body.question3 || null;
+    let question4 = req.body.question4 || null;
+    let question5 = req.body.question5 || null;
+    let question6 = parseInt(req.body.q6) || null;
+    let question7 = parseInt(req.body.q7) || null;
+    let question8 = parseInt(req.body.q8) || null;
+    let question9 = parseInt(req.body.q9) || null;
+    let question10 = parseInt(req.body.q10) || null;
+    let question11 = req.body.question11 || null;
+    let question12 = req.body.question12 || null;
+    let question13 = req.body.question13 || null;
+    let question14 = req.body.question14 || null;
+    let question15 = req.body.question15 || null;
 
   const date = new Date();
   const dateString = date.toLocaleDateString();
@@ -410,41 +450,78 @@ app.get('/goals.ejs', function (req, res) {
 });
 
 app.get('/adManage_survey.ejs', function (req, res) {
-  res.render('adManage_survey.ejs', { fname: req.session.fname, score: '10' });
+    // execute the SQL query
+    connection.query('SELECT * FROM survey_templates', function (err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('adManage_survey.ejs', { surveyTemplates: rows });
+        }
+    });
+});
+
+
+
+function getDates() {
+    var dates = [];
+    var currentDate = new Date();
+    for (var i = 0; i < 7; i++) {
+        var date = new Date(currentDate);
+        date.setDate(currentDate.getDate() + i);
+        dates.push(date);
+    }
+    return dates;
+}
+
+
+
+
+app.get('/calendar.ejs', function (req, res) {
+    connection.query('SELECT start_date, finish_date, goal FROM goals', function (error, results, fields) {
+        if (error) throw error;
+        const goals = results.map(row => ({
+            goal: row.goal,
+            start_date: new Date(row.start_date),
+            finish_date: new Date(row.finish_date)
+        }));
+        const months = [
+            { name: 'January', days: 31 },
+            { name: 'February', days: 28 },
+            { name: 'March', days: 31 },
+            { name: 'April', days: 30 },
+            { name: 'May', days: 31 },
+            { name: 'June', days: 30 },
+            { name: 'July', days: 31 },
+            { name: 'August', days: 31 },
+            { name: 'September', days: 30 },
+            { name: 'October', days: 31 },
+            { name: 'November', days: 30 },
+            { name: 'December', days: 31 }
+        ];
+        const dates = getDates();
+        res.render('calendar.ejs', { dates, goals, months });
+    });
 });
 
 
 
 
-app.get('/survey.ejs', function (req, res) {
-  res.render('survey.ejs', {
-      req: req,
-      fname: req.session.fname,
-      score: '10',
-      q1Value: typeof req.query.question1 !== 'undefined' ? req.query.question1 : '',
-      q2Value: typeof req.query.question2 !== 'undefined' ? req.query.question2 : '',
-      q3Value: typeof req.query.question3 !== 'undefined' ? req.query.question3 : '',
-      q4Value: typeof req.query.question4 !== 'undefined' ? req.query.question4 : '',
-      q5Value: typeof req.query.question5 !== 'undefined' ? req.query.question5 : '',
-      q6Value: typeof req.query.q6 !== 'undefined' ? req.query.q6 : 5,
-      q7Value: typeof req.query.q7 !== 'undefined' ? req.query.q7 : 5,
-      q8Value: typeof req.query.q8 !== 'undefined' ? req.query.q8 : 5,
-      q9Value: typeof req.query.q9 !== 'undefined' ? req.query.q9 : 5,
-      q10Value: typeof req.query.q10 !== 'undefined' ? req.query.q10 : 5,
-      q11Value: typeof req.query.q11 !== 'undefined' ? req.query.q11 : '',
-      q12Value: typeof req.query.q12 !== 'undefined' ? req.query.q12 : '',
-      q13Value: typeof req.query.q13 !== 'undefined' ? req.query.q13 : '',
-      q14Value: typeof req.query.q14 !== 'undefined' ? req.query.q14 : '',
-      q15Value: typeof req.query.q15 !== 'undefined' ? req.query.q15 : '',
 
 
 
-      
+app.get('/survey.ejs', (req, res) => {
+    const surveyDept = req.session.user_dept;
+    const query = `SELECT * FROM survey_templates WHERE survey_dept = '${surveyDept}'`;
 
-
-
-  });
+    connection.query(query, (err, results) => {
+        if (err) throw err;
+        console.log(results); // <-- Add this line
+        const surveyData = results[0];
+        console.log(surveyData); // <-- Add this line
+        res.render('survey.ejs', { surveyData });
+    });
 });
+
 
 
 
