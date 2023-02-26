@@ -326,28 +326,43 @@ app.post('/add-survey-template', function (req, res) {
 
 
 app.post('/surveys', (req, res) => {
-  //let user_id = req.session.user_id; // retrieve the user's ID from the session data
-    let question1 = req.body.question1 || null;
-    let question2 = req.body.question2 || null;
-    let question3 = req.body.question3 || null;
-    let question4 = req.body.question4 || null;
-    let question5 = req.body.question5 || null;
-    let question6 = parseInt(req.body.q6) || null;
-    let question7 = parseInt(req.body.q7) || null;
-    let question8 = parseInt(req.body.q8) || null;
-    let question9 = parseInt(req.body.q9) || null;
-    let question10 = parseInt(req.body.q10) || null;
-    let question11 = req.body.question11 || null;
-    let question12 = req.body.question12 || null;
-    let question13 = req.body.question13 || null;
-    let question14 = req.body.question14 || null;
-    let question15 = req.body.question15 || null;
+    //let user_id = req.session.user_id;
 
-  const date = new Date();
-  const dateString = date.toLocaleDateString();
-  console.log(question2);
-    connection.query('INSERT INTO survey_test (user_id, date_sent, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [user_id, dateString, question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15], function(error, results, fields) {
-    if (error) throw error;
+    let survey_id = '';
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 15; i++) {
+        survey_id += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    let surveyData = req.session.surveyData;
+    let template_id = surveyData.template_id;
+    let max_points = surveyData.max_points; 
+
+    let a1_yn = req.body.question1 || null;
+    let a2_yn = req.body.question2 || null;
+    let a3_yn = req.body.question3 || null;
+    let a4_yn = req.body.question4 || null;
+    let a5_yn = req.body.question5 || null;
+    let a1_scale = parseInt(req.body.q6) || null;
+    let a2_scale = parseInt(req.body.q7) || null;
+    let a3_scale = parseInt(req.body.q8) || null;
+    let a4_scale = parseInt(req.body.q9) || null;
+    let a5_scale = parseInt(req.body.q10) || null;
+    let a1_fr = req.body.question11 || null;
+    let a2_fr = req.body.question12 || null;
+    let a3_fr = req.body.question13 || null;
+    let a4_fr = req.body.question14 || null;
+    let a5_fr = req.body.question15 || null;
+
+    const date = new Date();
+    const dateString = date.toISOString().slice(0, 19).replace('T', ' ');
+
+
+
+    connection.query('INSERT INTO completed_surveys (survey_id, template_id, user_id, date_sent, date_completed, points_awarded, a1_yn, a2_yn, a3_yn, a4_yn, a5_yn, a1_scale, a2_scale, a3_scale, a4_scale, a5_scale, a1_fr, a2_fr, a3_fr, a4_fr, a5_fr) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_id, template_id, user_id, dateString, dateString, max_points, a1_yn, a2_yn, a3_yn, a4_yn, a5_yn, a1_scale, a2_scale, a3_scale, a4_scale, a5_scale, a1_fr, a2_fr, a3_fr, a4_fr, a5_fr], function (error, results, fields) {
+            if (error) throw error;
+
+
     // Redirect to a thank-you page
     res.send(`Thank you for completing the survey!`);
   });
@@ -515,9 +530,11 @@ app.get('/survey.ejs', (req, res) => {
 
     connection.query(query, (err, results) => {
         if (err) throw err;
-        console.log(results); // <-- Add this line
+       
         const surveyData = results[0];
-        console.log(surveyData); // <-- Add this line
+        //console.log(surveyData);
+        //console.log(results); 
+        req.session.surveyData = surveyData;
         res.render('survey.ejs', { surveyData });
     });
 });
