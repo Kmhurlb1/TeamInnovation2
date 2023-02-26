@@ -218,9 +218,35 @@ function getDates() {
     font-size: 18px;
   }
 
+  /* code break */
+
+.user-info {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.user-info .username {
+  font-weight: bold;
+  margin-right: 0px;
+}
+
+.user-info .permission {
+  font-style: italic;
+}
+
     </style>
       </head>
   <body>
+    <div class="user-info">
+      <!-- insert variables for name and permission here -->
+      <span class="username">John Doe</span><br>
+      <span class="permission">Admin</span>
+    </div>
     <header>
       <h1>TeamInnovation Survey Dashboard</h1>
     </header>
