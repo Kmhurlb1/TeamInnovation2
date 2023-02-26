@@ -294,6 +294,36 @@ app.post('/reset_password', (req, res) => {
 });
 
 
+// Add new survey template
+app.post('/add-survey-template', function (req, res) {
+    var survey_type = req.body.survey_type;
+    var survey_dept = req.body.survey_dept;
+    var q1_yn_selected = req.body.q1_yn_selected || null;
+    var q2_yn_selected = req.body.q2_yn_selected || null;
+    var q3_yn_selected = req.body.q3_yn_selected || null;
+    var q4_yn_selected = req.body.q4_yn_selected || null;
+    var q5_yn_selected = req.body.q5_yn_selected || null;
+    var q1_scale_selected = req.body.q1_scale_selected || null;
+    var q2_scale_selected = req.body.q2_scale_selected || null;
+    var q3_scale_selected = req.body.q3_scale_selected || null;
+    var q4_scale_selected = req.body.q4_scale_selected || null;
+    var q5_scale_selected = req.body.q5_scale_selected || null;
+    var q1_fr_selected = req.body.q1_fr_selected || null;
+    var q2_fr_selected = req.body.q2_fr_selected || null;
+    var q3_fr_selected = req.body.q3_fr_selected || null;
+    var q4_fr_selected = req.body.q4_fr_selected || null;
+    var q5_fr_selected = req.body.q5_fr_selected || null;
+    var max_points = req.body.max_points || null;
+
+    // Insert new survey template into database
+    connection.execute('INSERT INTO survey_templates (survey_type, survey_dept, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [survey_type, survey_dept, q1_yn_selected, q2_yn_selected, q3_yn_selected, q4_yn_selected, q5_yn_selected, q1_scale_selected, q2_scale_selected, q3_scale_selected, q4_scale_selected, q5_scale_selected, q1_fr_selected, q2_fr_selected, q3_fr_selected, q4_fr_selected, q5_fr_selected, max_points], function (error, results, fields) {
+        if (error) throw error;
+        res.redirect('/adManage_survey.ejs');
+    });
+});
+
+
+
 
 app.post('/surveys', (req, res) => {
   //let user_id = req.session.user_id; // retrieve the user's ID from the session data
@@ -420,8 +450,17 @@ app.get('/goals.ejs', function (req, res) {
 });
 
 app.get('/adManage_survey.ejs', function (req, res) {
-  res.render('adManage_survey.ejs', { fname: req.session.fname, score: '10' });
+    // execute the SQL query
+    connection.query('SELECT * FROM survey_templates', function (err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('adManage_survey.ejs', { surveyTemplates: rows });
+        }
+    });
 });
+
+
 
 function getDates() {
     var dates = [];
