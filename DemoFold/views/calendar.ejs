@@ -265,8 +265,6 @@ function getDates() {
 
 
 
-<!-- calendar.ejs -->
-
 <% const months = [
   { name: 'January', days: 31 },
   { name: 'February', days: 28 },
@@ -320,7 +318,10 @@ function getDates() {
               <% if (dayCount > month.days) { %>
                 <td></td>
               <% } else if (goalName !== "") { %>
-                <td class="day-square has-goal" data-toggle="tooltip" title="<%= goalName %> - <%= goalStart %> to <%= goalEnd %>"><%= dayCount %></td>
+                <td class="day-square has-goal" data-toggle="tooltip" title="<%= goalName %> - <%= goalStart %> to <%= goalEnd %>">
+                   <%= dayCount %>
+                   <span class="tooltip-indicator" style="color: red; font-size: 1.2em;">!</span>
+                </td>
                 <% dayCount++; %>
               <% } else { %>
                 <td class="day-square"><%= dayCount %></td>
@@ -333,8 +334,7 @@ function getDates() {
     </table>
   <% }); %>
 </div>
-</body>
-</html>
+
 
 
 
